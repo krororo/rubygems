@@ -63,7 +63,7 @@ module Bundler
       @platforms    = []
       @sources      = []
       @dependencies = {}
-      @checksums    = []
+      @checksums    = {}
       @state        = nil
       @specs        = {}
 
@@ -191,7 +191,8 @@ module Bundler
 
         version = Gem::Version.new(version)
         platform = platform ? Gem::Platform.new(platform) : Gem::Platform::RUBY
-        @checksums << Bundler::Checksum.new(name, version, platform, checksum)
+        checksum = Bundler::Checksum.new(name, version, platform, [checksum])
+        @checksums[checksum.full_name] = checksum
       end
     end
 
